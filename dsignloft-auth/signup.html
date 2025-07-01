@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account - DsignLoft</title>
+  <link rel="icon" href="https://assets.zyrosite.com/YleqxM2lNkfl3kLp/favicon-dsignloft-YKbl23wxwNT9WK37.png" type="image/png">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: White;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .signup-container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #53AB81;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #53AB81;
+    }
+
+    .password-strength {
+      font-size: 12px;
+      margin-top: 5px;
+      padding: 5px;
+      border-radius: 4px;
+    }
+
+    .password-strength.weak {
+      background: #fee;
+      color: #c33;
+    }
+
+    .password-strength.medium {
+      background: #ffc;
+      color: #c93;
+    }
+
+    .password-strength.strong {
+      background: #efe;
+      color: #363;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: #53AB81;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-bottom: 20px;
+    }
+
+    .btn:hover {
+      background: #1a1a1a;
+    }
+
+    .btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .btn-google {
+      background: #4285f4;
+      margin-bottom: 20px;
+    }
+
+    .btn-google:hover {
+      background: #357ae8;
+    }
+
+    .divider {
+      margin: 20px 0;
+      text-align: center;
+      position: relative;
+      color: #666;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #e0e0e0;
+    }
+
+    .divider span {
+      background: white;
+      padding: 0 15px;
+    }
+
+    .login-link {
+      color: #666;
+      margin-top: 20px;
+    }
+
+    .login-link a {
+      color: #53AB81;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .message.error {
+      background: #fee;
+      color: #c33;
+      border: 1px solid #fcc;
+    }
+
+    .message.success {
+      background: #efe;
+      color: #363;
+      border: 1px solid #cfc;
+    }
+
+    .loading {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .loading::after {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #53AB81;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <div class="logo"><img src="https://assets.zyrosite.com/YleqxM2lNkfl3kLp/logo_dsignloft-Y4LxQ4REjXhxO2a5.svg" alt="DsignLoft Logo" style="width: 150px;"></div>
+    <div class="subtitle">Create your account to get started</div>
+    
+    <div id="message" class="message" style="display: none;"></div>
+    
+    <!-- Google Sign-In Button -->
+    <button type="button" class="btn btn-google" id="googleSignInBtn">
+      <span>📧 Sign up with Google</span>
+    </button>
+    
+    <div class="divider">
+      <span>or</span>
+    </div>
+    
+    <form id="signupForm">
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required>
+        <div id="passwordStrength" class="password-strength" style="display: none;"></div>
+      </div>
+      
+      <div class="form-group">
+        <label for="userType">I am a...</label>
+        <select id="userType" required>
+          <option value="client">Client (Looking for design services)</option>
+          <option value="designer">Designer (Offering design services)</option>
+        </select>
+      </div>
+      
+      <button type="submit" class="btn" id="signupBtn">Create Account</button>
+    </form>
+    
+    <div class="loading" id="loading"></div>
+    
+    <div class="login-link">
+      Already have an account? <a href="login.html">Sign in here</a>
+    </div>
+  </div>
+
+  <!-- Firebase Config -->
+  <script type="module" src="firebase-config.js"></script>
+  
+  <script type="module">
+    // Wait for Firebase to be loaded
+    window.addEventListener('load', function() {
+      if (!window.firebaseAuth) {
+        console.error('Firebase not loaded');
+        return;
+      }
+
+      const { auth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } = window.firebaseAuth;
+
+      // Check if already logged in
+      // onAuthStateChanged(auth, (user) => {
+      //   if (user) {
+      //     // Already logged in, redirect
+      //     window.location.href = "../dashboard.html";
+      //   }
+      // });
+
+      // Google Sign-In
+      document.getElementById('googleSignInBtn').addEventListener('click', async function() {
+        try {
+          showLoading(true);
+          const result = await signInWithPopup(auth, GoogleAuthProvider);
+          const user = result.user;
+          
+          // Store user email in localStorage
+          localStorage.setItem('user_email', user.email);
+          localStorage.setItem('user_name', user.displayName || '');
+          localStorage.setItem('user_photo', user.photoURL || '');
+          localStorage.setItem('user_type', 'client'); // Default for Google sign-in
+          
+          // Store email in MySQL database
+          await storeUserInDatabase(user.email, user.displayName || '', 'client');
+          
+          showMessage('Account created successfully! Redirecting...', 'success');
+          setTimeout(() => {
+            window.location.href = '../dashboard.html';
+          }, 1500);
+          
+        } catch (error) {
+          console.error('Google sign-in error:', error);
+          showMessage(getFirebaseErrorMessage(error), 'error');
+        } finally {
+          showLoading(false);
+        }
+      });
+
+      // Email/Password Sign-Up
+      document.getElementById('signupForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        await signup();
+      });
+
+      document.getElementById('password').addEventListener('input', function() {
+        checkPasswordStrength();
+      });
+
+      async function signup() {
+        const fullName = document.getElementById('fullName').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const userType = document.getElementById('userType').value;
+        
+        // Validate inputs
+        if (!fullName || !email || !password || !userType) {
+          showMessage('Please fill in all fields', 'error');
+          return;
+        }
+        
+        if (!validateEmail(email)) {
+          showMessage('Please enter a valid email address', 'error');
+          return;
+        }
+        
+        if (password.length < 6) {
+          showMessage('Password must be at least 6 characters', 'error');
+          return;
+        }
+        
+        try {
+          showLoading(true);
+          
+          // Create user with Firebase
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+          
+          // Store user info in localStorage
+          localStorage.setItem('user_email', user.email);
+          localStorage.setItem('user_name', fullName);
+          localStorage.setItem('user_type', userType);
+          
+          // Store email in MySQL database
+          await storeUserInDatabase(user.email, fullName, userType);
+          
+          showMessage('Account created successfully! Redirecting...', 'success');
+          
+          setTimeout(() => {
+            window.location.href = '../dashboard.html';
+          }, 1500);
+          
+        } catch (error) {
+          console.error('Signup error:', error);
+          showMessage(getFirebaseErrorMessage(error), 'error');
+        } finally {
+          showLoading(false);
+        }
+      }
+
+      async function storeUserInDatabase(email, fullName, userType) {
+        try {
+          const response = await fetch('register_user.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: email,
+              full_name: fullName,
+              user_type: userType
+            })
+          });
+          
+          const data = await response.json();
+          if (!data.success) {
+            console.warn('Database storage warning:', data.error);
+            // Don't throw error as Firebase auth was successful
+          }
+        } catch (error) {
+          console.warn('Database storage error:', error);
+          // Don't throw error as Firebase auth was successful
+        }
+      }
+
+      function checkPasswordStrength() {
+        const password = document.getElementById('password').value;
+        const strengthDiv = document.getElementById('passwordStrength');
+        
+        if (password.length === 0) {
+          strengthDiv.style.display = 'none';
+          return;
+        }
+        
+        strengthDiv.style.display = 'block';
+        
+        if (password.length < 6) {
+          strengthDiv.textContent = 'Too short (minimum 6 characters)';
+          strengthDiv.className = 'password-strength weak';
+        } else if (!/[0-9]/.test(password) || !/[a-zA-Z]/.test(password)) {
+          strengthDiv.textContent = 'Include both letters and numbers for better security';
+          strengthDiv.className = 'password-strength medium';
+        } else {
+          strengthDiv.textContent = 'Strong password!';
+          strengthDiv.className = 'password-strength strong';
+        }
+      }
+
+      function showMessage(text, type) {
+        const messageDiv = document.getElementById('message');
+        messageDiv.textContent = text;
+        messageDiv.className = `message ${type}`;
+        messageDiv.style.display = 'block';
+      }
+
+      function showLoading(show) {
+        const signupBtn = document.getElementById('signupBtn');
+        const googleBtn = document.getElementById('googleSignInBtn');
+        const loading = document.getElementById('loading');
+        
+        if (show) {
+          signupBtn.disabled = true;
+          googleBtn.disabled = true;
+          signupBtn.textContent = 'Creating Account...';
+          loading.style.display = 'block';
+        } else {
+          signupBtn.disabled = false;
+          googleBtn.disabled = false;
+          signupBtn.textContent = 'Create Account';
+          loading.style.display = 'none';
+        }
+      }
+
+      function validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+      }
+
+      function getFirebaseErrorMessage(error) {
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            return 'An account with this email already exists';
+          case 'auth/invalid-email':
+            return 'Invalid email address';
+          case 'auth/weak-password':
+            return 'Password is too weak';
+          case 'auth/popup-closed-by-user':
+            return 'Sign-in popup was closed';
+          default:
+            return error.message || 'An error occurred during signup';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+
+

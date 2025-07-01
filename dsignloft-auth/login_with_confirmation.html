@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login to DsignLoft</title>
+    <link rel="icon" href="https://assets.zyrosite.com/YleqxM2lNkfl3kLp/favicon-dsignloft-YKbl23wxwNT9WK37.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+         .logo {
+          font-size: 2rem;
+          font-weight: bold;
+          color: #53AB81;
+          margin-bottom: 10px;
+          text-align: center;
+        }
+        
+        .welcome-text {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e9e6;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="email"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #53AB81;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: #53AB81;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #45926e;
+        }
+
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .btn-google {
+            background-color: #4285f4;
+            color: white;
+        }
+        
+        .btn-google:hover {
+            background-color: #357ae8;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            color: #666;
+        }
+        
+        .message {
+            padding: 0.75rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .message.info {
+            background-color: #e7f3ff;
+            color: #0066cc;
+            border: 1px solid #b3d9ff;
+        }
+
+        .message.warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            color: #666;
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .signup-link a {
+            color: #53AB81;
+            text-decoration: none;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .confirmation-notice {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .confirmation-notice h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .confirmation-notice p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .resend-link {
+            color: #53AB81;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .resend-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo"><img src="https://assets.zyrosite.com/YleqxM2lNkfl3kLp/logo_dsignloft-Y4LxQ4REjXhxO2a5.svg" alt="DsignLoft Logo" style="width: 150px;"></div>
+        
+        <div class="welcome-text">
+            <p>Welcome back! Please sign in to your account</p>
+        </div>
+        
+        <div id="message-container"></div>
+        <div id="loading" class="loading">Signing in...</div>
+        
+        <form id="loginForm">
+            <button type="button" id="googleSignInBtn" class="btn btn-google">
+                📧 Sign in with Google
+            </button>
+            
+            <div class="divider">or</div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+        
+        <div class="signup-link">
+            <p>Don't have an account? <a href="signup_with_confirmation.html">Create one here</a></p>
+        </div>
+    </div>
+
+    <script>
+      let pendingConfirmationEmail = '';
+
+      // Show/hide loading state
+      function showLoading(show) {
+        document.getElementById('loading').style.display = show ? 'block' : 'none';
+        document.getElementById('loginForm').style.display = show ? 'none' : 'block';
+        
+        const submitBtn = document.querySelector('button[type="submit"]');
+        const googleBtn = document.getElementById('googleSignInBtn');
+        
+        if (submitBtn) submitBtn.disabled = show;
+        if (googleBtn) googleBtn.disabled = show;
+      }
+      
+      // Show messages
+      function showMessage(message, type) {
+        const container = document.getElementById('message-container');
+        container.innerHTML = `<div class="message ${type}">${message}</div>`;
+        
+        // Auto-hide info messages after 5 seconds
+        if (type === 'info') {
+          setTimeout(() => {
+            container.innerHTML = '';
+          }, 5000);
+        }
+      }
+      
+      function showSuccess(message) {
+        showMessage(message, 'success');
+      }
+      
+      function showError(message) {
+        showMessage(message, 'error');
+      }
+
+      function showInfo(message) {
+        showMessage(message, 'info');
+      }
+
+      function showWarning(message) {
+        showMessage(message, 'warning');
+      }
+      
+      // Validate email format
+      function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+      }
+
+      // Show confirmation notice
+      function showConfirmationNotice(email) {
+        const container = document.getElementById('message-container');
+        container.innerHTML = `
+          <div class="confirmation-notice">
+            <h3>⚠️ Email Confirmation Required</h3>
+            <p>Your account exists but hasn't been confirmed yet. Please check your email for a confirmation link.</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p>
+              Didn't receive the email? 
+              <a href="#" class="resend-link" onclick="resendConfirmation('${email}')">Resend confirmation email</a>
+            </p>
+          </div>
+        `;
+        pendingConfirmationEmail = email;
+      }
+
+      // Resend confirmation email
+      async function resendConfirmation(email) {
+        try {
+          showInfo('Resending confirmation email...');
+          
+          const response = await fetch('email_confirmation.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              action: 'send_confirmation',
+              email: email,
+              full_name: email.split('@')[0] // Use email prefix as fallback name
+            })
+          });
+          
+          const result = await response.json();
+          
+          if (result.success) {
+            showSuccess('Confirmation email resent successfully! Please check your inbox.');
+          } else {
+            showError(result.error || 'Failed to resend confirmation email');
+          }
+          
+        } catch (error) {
+          console.error('Resend error:', error);
+          showError('Network error occurred. Please try again.');
+        }
+      }
+      
+      // Login function
+      async function login() {
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        
+        if (!email || !password) {
+          showError('Please enter both email and password');
+          return;
+        }
+        
+        if (!validateEmail(email)) {
+          showError('Please enter a valid email address');
+          return;
+        }
+        
+        try {
+          showLoading(true);
+          
+          // First, check if user exists and is confirmed
+          const checkResponse = await fetch('check_user_status.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: email
+            })
+          });
+          
+          const checkResult = await checkResponse.json();
+          
+          if (checkResult.exists && !checkResult.confirmed) {
+            showConfirmationNotice(email);
+            return;
+          }
+          
+          // Proceed with login
+          const response = await fetch('simple_login.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: email,
+              password: password,
+              name: email.split('@')[0] // Use email prefix as name
+            })
+          });
+          
+          const result = await response.json();
+          
+          if (result.success) {
+            // Store session token and user info
+            localStorage.setItem('session_token', result.session_token);
+            localStorage.setItem('user_email', result.user.email);
+            localStorage.setItem('user_name', result.user.name);
+            
+            showSuccess('Login successful! Redirecting...');
+            
+            // Redirect to dashboard after short delay
+            setTimeout(() => {
+              window.location.href = '../dashboard.html';
+            }, 1000);
+          } else {
+            if (result.message && result.message.includes('not found')) {
+              showError('Account not found. Please sign up first or check your email address.');
+            } else {
+              showError(result.message || 'Login failed');
+            }
+          }
+          
+        } catch (error) {
+          console.error('Login error:', error);
+          showError('Login failed: ' + error.message);
+        } finally {
+          showLoading(false);
+        }
+      }
+      
+      // Google Sign-In (simplified for testing)
+      async function googleSignIn() {
+        showInfo('Google Sign-In will be implemented with proper OAuth flow in production.');
+      }
+      
+      // Event listeners
+      document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        login();
+      });
+      
+      document.getElementById('googleSignInBtn').addEventListener('click', googleSignIn);
+      
+      console.log('Login page loaded');
+    </script>
+</body>
+</html>
+
