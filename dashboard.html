@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>DsignLoft Client</title>
+    <link href="https://assets.zyrosite.com/YleqxM2lNkfl3kLp/favicon-dsignloft-YKbl23wxwNT9WK37.png" rel="icon" type="image/png"/>
+    <style>
+        /* --- Enhanced Dashboard CSS combining both designs --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        @font-face {
+          font-family: 'Graphik';
+          src: url('/fonts/Graphik Italic.woff') format('woff');
+          font-weight: 400;
+          font-style: normal;
+        }
+    
+        @font-face {
+          font-family: 'Graphik';
+          src: url('/fonts/Graphik Regular.woff') format('woff');
+          font-weight: 500;
+          font-style: normal;
+        }
+    
+        @font-face {
+          font-family: 'Graphik';
+          src: url('/fonts/Graphik Medium Regular.woff') format('woff');
+          font-weight: 700;
+          font-style: normal;
+        }
+        
+        body {
+          font-family: 'Graphik', sans-serif;
+        }
+    
+        /* --- Header Styles --- */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 0 30px;
+        }
+    
+        .header-content-grid {
+            max-width: 1152px;
+            margin: 0 auto;
+        }
+    
+        .header-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+    
+        .header-bottom-row {
+            padding-top: 2px;
+        }
+    
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+        }
+    
+        .user-name {
+            font-weight: 700;
+            color: #333;
+            cursor: pointer;
+        }
+    
+        .profile-photo {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #53AB81;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    
+        .user-dropdown {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            min-width: 180px;
+            z-index: 1001;
+            display: none;
+            overflow: hidden;
+        }
+    
+        .user-dropdown.show {
+            display: block;
+        }
+    
+        .dropdown-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+    
+        .dropdown-item:hover {
+            background-color: #f4f6f8;
+        }
+    
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+    
+        .project-title-container {
+            margin-bottom: 5px;
+        }
+    
+        .project-title-container h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            padding: 10px 0;
+        }
+    
+        .nav-tabs {
+            display: flex;
+            gap: 30px;
+            border-bottom: 1px solid #e9e9e9;
+            padding-top: 5px;
+        }
+    
+        .nav-tab {
+            padding: 12px 0;
+            padding-bottom: 15px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 700;
+            color: #666;
+            transition: all 0.2s ease;
+        }
+    
+        .nav-tab:hover {
+            color: #53AB81;
+        }
+    
+        .nav-tab.active {
+            color: #333;
+            border-bottom-color: #53AB81;
+        }
+    
+        /* --- Main Content Styles --- */
+        .main-container {
+            max-width: 1210px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+    
+        .tab-content {
+            display: none;
+            padding-top: 15px;
+        }
+    
+        .tab-content.active {
+            display: block;
+        }
+    
+        .info-bar {
+            background-color: #333;
+            color: white;
+            padding: 12px 20px;
+            margin-top: -32px;
+            margin-bottom: 30px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+        }
+    
+        .info-bar a {
+            color: #53AB81;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        /* Brief Layout Styles */
+        .brief-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px 20px;
+            border-radius: 8px;
+            border: 1px solid #e9e9e9;
+        }
+        
+        .brief-left-column {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .brief-right-column {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .brief-column {
+            background: white;
+            border: 1px solid #e9e9e9;
+            border-radius: 8px;
+            padding: 30px;
+        }
+        
+        .brief-section {
+            margin-bottom: 30px;
+        }
+
+        .brief-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .brief-section h4,
+        .brief-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #53AB81;
+        }
+        
+        .brief-field {
+            margin-bottom: 20px;
+        }
+        
+        .brief-label { 
+            display: block;
+            font-size: 14px;
+            font-weight: 600; 
+            color: #666; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+            margin-bottom: 5px; 
+        }
+        
+        .brief-value { 
+            font-size: 14px;
+            color: #333; 
+            margin-bottom: 15px; 
+            line-height: 1.6; 
+            min-height: 20px;
+            word-wrap: break-word;
+        }
+        
+        .brief-select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
+        }
+        
+        .package-display {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .package-name-box {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .package-price-box {
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        
+        .brief-color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .brief-color-box {
+            width: 180px;
+            height: 180px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            background: #f0f0f0;
+            flex-shrink: 0;
+        }
+        
+        .brief-style-sliders {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .brief-style-slider {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            font-size: 14px;
+            width: 100%;
+            color: #666;
+        }
+        
+        .brief-style-left-label {
+            flex-shrink: 0;
+            margin-right: 15px;
+            font-weight: 550;
+            width: 100px;
+            text-align: left;
+            color: #666;
+        }
+        
+        .brief-style-right-label {
+            flex-shrink: 0;
+            margin-left: 15px;
+            font-weight: 550;
+            width: 100px;
+            text-align: left;
+        }
+        
+        .brief-style-slider-track {
+            flex: 1;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            position: relative;
+            width: 250px;
+            max-width: 400px;
+            min-width: auto;
+        }
+        
+        .brief-style-slider-thumb {
+            position: absolute;
+            top: -8px;
+            width: 22px;
+            height: 22px;
+            background: #53AB81;
+            border-radius: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .inspiration-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .inspiration-image {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #e9e9e9;
+        }
+        
+        .inspiration-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brief-inspiration-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .brief-inspiration-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+            aspect-ratio: 1;
+        }
+        
+        .brief-inspiration-image {
+            width: 100%;
+            height: 100%;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+            overflow: hidden;
+        }
+
+        .brief-deliverable-row {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .brief-deliverable-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            width: 40px;
+            text-align: center;
+        }
+        
+        .brief-deliverable-info {
+            flex: 1;
+        }
+        
+        .brief-deliverable-name {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .brief-deliverable-status {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .brief-file-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .brief-file-option {
+            background: #f8f9fa;
+            border: 1px solid #e9e9e9;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .deliverable-item {
+            padding: 4px 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Payment Tab Styles */
+        .payment-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .payment-summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .summary-card {
+            background: white;
+            border: 1px solid #e9e9e9;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .invoice-container {
+            background: white;
+            border: 1px solid #e9e9e9;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .invoice-header {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            background: #f8f9fa;
+            padding: 15px 20px;
+            font-weight: 600;
+            border-bottom: 1px solid #e9e9e9;
+        }
+
+        .invoice-body {
+            padding: 20px;
+        }
+
+        .invoice-item {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .invoice-item:last-child {
+            border-bottom: none;
+        }
+
+        .invoice-footer {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            background: #f8f9fa;
+            padding: 15px 20px;
+            font-weight: 600;
+            border-top: 1px solid #e9e9e9;
+        }
+
+        .invoice-column-amount {
+            text-align: right;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #53AB81;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #45926e;
+        }
+
+        .btn-secondary {
+            background: #e9ecef;
+            color: #333;
+            border: 1px solid #e9e9e9;
+        }
+
+        .btn-secondary:hover {
+            background: #dcdfe2;
+        }
+        
+        /* Responsive Brief Layout */
+        @media (max-width: 768px) {
+            .brief-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        
+            .brief-left-column {
+                order: 2;
+            }
+        
+            .brief-right-column {
+                order: 1;
+            }
+        }
+
+        .guaranteed-nda-tag {
+            background-color: #d4edda; /* Light green */
+            color: #155724; /* Dark green */
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.95); z-index:9999; display:flex; align-items:center; justify-content:center;"><p style="font-size: 18px;">Loading Dashboard...</p></div>
+
+    <header class="header">
+        <div class="header-content-grid">
+            <div class="header-top-row">
+                <div class="logo">
+                    <img src="https://assets.zyrosite.com/YleqxM2lNkfl3kLp/logo_dsignloft-Y4LxQ4REjXhxO2a5.svg" alt="DsignLoft Logo" style="width: 180px;"></div>
+                <div class="user-section">
+                    <div class="user-name" id="headerUserName" onclick="toggleUserDropdown()"></div>
+                    <div class="profile-photo" id="headerProfilePhoto" onclick="toggleUserDropdown()"></div>
+                    <div class="user-dropdown" id="userDropdown">
+                    <div class="dropdown-item" onclick="signOut()">Sign Out</div>
+            </div>
+        </div>
+            </div>
+            <div class="header-bottom-row">
+                <div class="project-title-container">
+                    <h2 id="projectTitle">Your Project Dashboard</h2>
+                </div>
+                <div class="nav-tabs">
+                    <div class="nav-tab active" onclick="switchTab('brief')">Brief</div>
+                    <div class="nav-tab" onclick="switchTab('files')">Files</div>
+                    <div class="nav-tab" onclick="switchTab('messages')">Messages</div>
+                    <div class="nav-tab" onclick="switchTab('payment')">Payments</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="tab-content active" id="brief-tab">
+            <!-- Top instruction bar -->
+            <div class="info-bar">
+              100% money back guarantee. 
+              <a 
+                href="https://dsignloft.com/dsignloft-refund-policy" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                style="color: #53AB81; text-decoration: underline;">
+                Read our Terms and Conditions.
+              </a>
+            </div>
+        
+            <!-- Two-column layout -->
+            <div class="brief-container">
+                <div class="brief-left-column">
+                    <div class="brief-section">
+                        <h3 class="brief-section-title">General Information</h3>
+                        <div class="brief-field">
+                            <label class="brief-label">PROJECT TITLE</label>
+                            <div class="brief-value" id="brief-project-title">Loading...</div>
+                        </div>
+                        <div class="brief-field">
+                            <label class="brief-label">PACKAGE</label>
+                            <div class="brief-value package-display" id="brief-package">Loading...</div>
+                        </div>
+                        <div class="brief-field" id="brief-project-duration-website-container" style="display:none;">
+                            <label class="brief-label">PROJECT DURATION FOR WEBSITE</label>
+                            <div class="brief-value" id="brief-project-duration-website"></div>
+                        </div>
+                        <div class="brief-field" id="brief-project-duration-container" style="display:none;">
+                            <label class="brief-label">PROJECT DURATION</label>
+                            <div class="brief-value" id="brief-project-duration"></div>
+                        </div>
+                        <div class="brief-field" id="brief-guaranteed-container" style="display:none;">
+                            <label class="brief-label">GUARANTEED</label>
+                            <div class="brief-value" id="brief-guaranteed"></div>
+                        </div>
+                        <div class="brief-field" id="brief-nda-container" style="display:none;">
+                            <label class="brief-label">NDA</label>
+                            <div class="brief-value" id="brief-nda"></div>
+                        </div>
+                        <div class="brief-field" id="brief-print-options-container" style="display:none;">
+                            <label class="brief-label">Print Options (Indonesia only)</label>
+                            <div class="brief-value" id="brief-print-options"></div>
+                        </div>
+                        <div class="brief-section">
+                            <h3 class="brief-section-title">Language</h3>
+                            <div class="brief-field">
+                                <select class="brief-select" id="brief-language">
+                                    <option value="English">English</option>
+                                    <option value="Spanish">Spanish</option>
+                                    <option value="French">French</option>
+                                    <option value="German">German</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Right column -->
+                <div class="brief-right-column">
+                    <div class="brief-section">
+                        <h3 class="brief-section-title">Background information</h3>
+                        <div class="brief-field">
+                            <label class="brief-label">NAME TO INCORPORATE IN THE LOGO</label>
+                            <div class="brief-value" id="brief-brand-name"></div>
+                        </div>
+                        <div class="brief-field">
+                            <label class="brief-label">SLOGAN</label>
+                            <div class="brief-value" id="brief-slogan"></div>
+                        </div>
+                        <div class="brief-field">
+                            <label class="brief-label">DESCRIPTION</label>
+                            <div class="brief-value" id="brief-description"></div>
+                        </div>
+                        <div class="brief-field">
+                            <label class="brief-label">INDUSTRY</label>
+                            <div class="brief-value" id="brief-industry"></div>
+                        </div>
+                        <div class="brief-field">
+                            <label class="brief-label">NOTES</label>
+                            <div class="brief-value" id="brief-notes"></div>
+                        </div>
+                    </div>
+
+                    <div class="brief-section">
+                        <h3 class="brief-section-title">Visual style</h3>
+                        <div class="brief-field">
+                            <label class="brief-label">COLORS</label>
+                            <div class="brief-color-palette" id="brief-colors">
+                                <!-- Colors will be populated here -->
+                            </div>
+                        </div>
+                        <div class="brief-field">
+                            <label class="brief-label">STYLE ATTRIBUTES</label>
+                            <div class="brief-style-sliders" id="brief-style-attributes">
+                                <!-- Style sliders will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="brief-section">
+                        <h3 class="brief-section-title">Design Inspiration</h3>
+                        <div class="brief-field">
+                            <label class="brief-label">DESIGN INSPIRATION</label>
+                            <div class="brief-inspiration-grid" id="brief-design-inspiration">
+                                <!-- Logo inspirations will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="brief-section">
+                        <h3 class="brief-section-title">Deliverables</h3>
+                        <div class="brief-field">
+                            <label class="brief-label">DELIVERABLES</label>
+                            <div class="brief-value" id="brief-deliverables">
+                                <!-- Deliverables will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="brief-section">
+                        <h3 class="brief-section-title">Files deliverables</h3>
+                        <div id="brief-files-deliverables">
+                            <!-- Files deliverables will be populated here based on service type -->
+                        </div>
+                    </div>
+        
+                    <div class="brief-section">
+                        <h3 class="brief-section-title">Final files</h3>
+                        <div id="brief-final-files">
+                            <!-- Final files will be populated here based on service type -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="button-group">
+                <a href="index.html?mode=edit" class="btn btn-secondary">Edit Brief</a>
+                <button class="btn btn-primary" onclick="switchTab('payment')">Proceed to Payments</button>
+            </div>
+        </div>
+
+        <div class="tab-content" id="files-tab">
+            <div class="info-bar">You will receive design drafts shortly after payment is complete.</div>
+            <div class="brief-container">
+                <div class="brief-column">
+                    <div class="brief-section">
+                        <h4>Project Files</h4>
+                        <p>No files have been uploaded yet.</p>
+                    </div>
+                </div>
+                <div class="brief-column">
+                    <div class="brief-section">
+                        <h4>Deliverables</h4>
+                        <p>Your project deliverables will appear here once the designer begins work.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="messages-tab">
+            <div class="brief-container">
+                <div class="brief-column">
+                    <div class="brief-section">
+                        <h4>Messages</h4>
+                        <p>No messages yet. Your designer will contact you here when they have questions or updates.</p>
+                    </div>
+                </div>
+                <div class="brief-column">
+                    <div class="brief-section">
+                        <h4>Project Updates</h4>
+                        <p>Project status updates will appear here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="payment-tab-content">
+            <div class="payment-layout">
+                <div class="payment-summary-cards">
+                    <div class="summary-card">
+                        <div class="card-label">Total</div>
+                        <div class="card-value" id="payment-total">$0.00</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-label">Secured by DsignLoft</div>
+                        <div class="card-value" id="payment-secured">$0.00</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-label">Released to designer</div>
+                        <div class="card-value" id="payment-released">$0.00</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-label">Earnings</div>
+                        <div class="card-value" id="payment-earnings">$0.00</div>
+                    </div>
+                </div>
+
+                <div class="invoice-container">
+                    <div class="invoice-header">
+                        <div class="invoice-column-service">Service</div>
+                        <div class="invoice-column-amount">Amount</div>
+                    </div>
+                    <div class="invoice-body" id="invoice-items">
+                        <p>Loading invoice details...</p>
+                    </div>
+                    <div class="invoice-footer">
+                        <div class="invoice-column-service">Total</div>
+                        <div class="invoice-column-amount" id="invoice-total">$0.00</div>
+                    </div>
+                </div>
+
+                 <div class="button-group">
+                    <button class="btn btn-secondary">Complete Project</button>
+                    <button class="btn btn-primary">Create New Quote</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDi3Ywxp625WnRxS4VSf_UBNPMHEYxE1ZE",
+            authDomain: "dsignloft-app.firebaseapp.com",
+            projectId: "dsignloft-app",
+            storageBucket: "dsignloft-app.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        // --- 1. MAIN INITIALIZATION FUNCTION ---
+        async function initializeDashboard(user) {
+            console.log('Initializing dashboard for user:', user.uid);
+            
+            // Update user info in header
+            updateUserInfo(user);
+            
+            // Fetch and display the brief
+            const briefData = await fetchAndDisplayBrief(user.uid);
+            
+            // Display payment information if brief exists
+            if (briefData) {
+                displayPaymentInfo(briefData);
+            }
+            
+            // Hide loading overlay
+            document.getElementById('loading-overlay').style.display = 'none';
+        }
+
+        // --- 2. DATA FETCHING FUNCTIONS ---
+        
+        // This function gets the data from your API and displays it
+        async function fetchAndDisplayBrief(uid) {
+            try {
+                console.log('Fetching brief for UID:', uid);
+                const response = await fetch(`api/get_brief.php?uid=${uid}`);
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    displayNoBrief();
+                    return null;
+                }
+
+                const briefData = await response.json();
+                console.log('Brief data received:', briefData);
+
+                // Update project title
+                document.getElementById('projectTitle').textContent = `${briefData.projectOptions?.title || 'Creative Brief'}`;
+
+                // Render the full brief using the new comprehensive function
+                updateBriefDisplay(briefData);
+                
+                return briefData;
+
+            } catch (error) {
+                displayErrorMessage();
+                console.error("Error fetching brief data:", error);
+                return null;
+            }
+        }
+
+        function displayNoBrief() {
+            document.getElementById('brief-package').innerHTML = '<p>No creative brief has been saved. <a href="index.html?mode=edit">Create one now.</a></p>';
+        }
+
+        function displayErrorMessage() {
+            document.getElementById('brief-package').innerHTML = '<p>An error occurred while loading your brief.</p>';
+        }
+
+        // --- 3. HELPER FUNCTIONS ---
+
+        // This function updates the user's name and initial in the header.
+        function updateUserInfo(user) {
+            if (!user) return;
+            
+            const displayName = user.displayName || user.email || 'User';
+            const profilePhotoEl = document.getElementById('headerProfilePhoto');
+            
+            document.getElementById('headerUserName').textContent = displayName;
+            
+            // Enhanced photoURL checking with better debugging
+            console.log('User photoURL:', user.photoURL);
+            console.log('User photoURL type:', typeof user.photoURL);
+            console.log('User photoURL exists:', !!user.photoURL);
+        
+            if (user.photoURL && user.photoURL.trim() !== '') {
+                console.log('Using user photoURL:', user.photoURL);
+                profilePhotoEl.innerHTML = `<img src="${user.photoURL}" alt="Profile Photo" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.textContent='${generateInitials(displayName)}';">`;
+            } else {
+                console.log('No photoURL available, using initials');
+                const initials = generateInitials(displayName);
+                profilePhotoEl.textContent = initials;
+                profilePhotoEl.style.backgroundColor = '#53AB81';
+                profilePhotoEl.style.color = 'white';
+                profilePhotoEl.style.display = 'flex';
+                profilePhotoEl.style.alignItems = 'center';
+                profilePhotoEl.style.justifyContent = 'center';
+            }
+        }
+
+        function generateInitials(name) {
+            if (!name) return 'U';
+            const parts = name.split(/\s@+/);
+            return parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : name.substring(0, 2).toUpperCase();
+        }
+
+        /**
+         * This is the comprehensive function to update the brief display
+         * It combines the best of both dashboard designs
+         */
+        function updateBriefDisplay(briefData) {
+            // Helper function to safely get nested properties
+            const safeGet = (obj, path, defaultValue = 'Not specified') => {
+                return path.split('.').reduce((current, key) => current && current[key], obj) || defaultValue;
+            };
+
+            // --- Helper for prices and package names ---
+            const packageDetails = {
+                bronze: { name: 'bronze', price: '$299', color: '#CD7F32' },
+                silver: { name: 'silver', price: '$599', color: '#C0C0C0' },
+                gold: { name: 'gold', price: '$1,299', color: '#f1B80B' },
+                platinum: { name: 'platinum', price: '$2,199', color: '#E5E4E2' },
+                website: { name: 'website', price: '$2,899', color: '#53AB81' }
+            };
+            const currentPackage = packageDetails[briefData.selectedPackage] || { name: briefData.selectedPackage, price: 'N/A', color: '#333' };
+
+            // Update package information
+            const packageEl = document.getElementById('brief-package');
+            if (packageEl) {
+                packageEl.innerHTML = `
+                    <span class="package-name-box" style="background-color: ${currentPackage.color}; color: ${briefData.selectedPackage === 'platinum' ? '#333' : 'white'}; ">${currentPackage.name}</span>
+                    <span class="package-price-box">${currentPackage.price}</span>
+                `;
+            }
+
+            // Update project title
+            const projectTitleEl = document.getElementById('brief-project-title');
+            if (projectTitleEl) {
+                projectTitleEl.textContent = safeGet(briefData, 'projectOptions.title');
+            }
+
+            // Update guaranteed
+            const guaranteedEl = document.getElementById('brief-guaranteed');
+            if (guaranteedEl) {
+                if (safeGet(briefData, 'projectOptions.guaranteed')) {
+                    guaranteedEl.innerHTML = '<span class="guaranteed-nda-tag">GUARANTEED</span>';
+                    guaranteedEl.style.display = 'block';
+                } else {
+                    guaranteedEl.style.display = 'none';
+                }
+            }
+
+            // Update NDA
+            const ndaEl = document.getElementById('brief-nda');
+            if (ndaEl) {
+                if (safeGet(briefData, 'projectOptions.nda')) {
+                    ndaEl.innerHTML = '<span class="guaranteed-nda-tag">NDA</span>';
+                    ndaEl.style.display = 'block';
+                } else {
+                    ndaEl.style.display = 'none';
+                }
+            }
+
+            // Update project duration for website
+            const projectDurationWebsiteContainer = document.getElementById('brief-project-duration-website-container');
+            const projectDurationWebsiteEl = document.getElementById('brief-project-duration-website');
+            const serviceType = safeGet(briefData, 'briefDetails.serviceType');
+            if (projectDurationWebsiteContainer && projectDurationWebsiteEl) {
+                if (serviceType === 'Website' || serviceType === 'Landing Page' || serviceType === 'Other') {
+                    projectDurationWebsiteEl.textContent = safeGet(briefData, 'projectOptions.websiteDuration', 'Not specified');
+                    projectDurationWebsiteContainer.style.display = 'block';
+                } else {
+                    projectDurationWebsiteContainer.style.display = 'none';
+                }
+            }
+
+            // Update project duration
+            const projectDurationContainer = document.getElementById('brief-project-duration-container');
+            const projectDurationEl = document.getElementById('brief-project-duration');
+            const projectDurationValue = safeGet(briefData, 'projectOptions.projectDuration');
+            const packageType = briefData.selectedPackage;
+
+            if (projectDurationContainer && projectDurationEl) {
+                if (packageType === 'bronze' || packageType === 'silver' || packageType === 'gold' || packageType === 'platinum') {
+                    projectDurationEl.textContent = projectDurationValue;
+                    projectDurationContainer.style.display = 'block';
+                } else {
+                    projectDurationContainer.style.display = 'none';
+                }
+            }
+
+            // Update print options
+            const printOptionsContainer = document.getElementById('brief-print-options-container');
+            const printOptionsEl = document.getElementById('brief-print-options');
+            if (printOptionsContainer && printOptionsEl) {
+                if (safeGet(briefData, 'businessCardPrinting.enabled')) {
+                    let printDetails = '';
+                    const printOptions = safeGet(briefData, 'businessCardPrinting.options', []);
+                    if (printOptions.length > 0) {
+                        printDetails += '<ul>';
+                        printOptions.forEach(option => {
+                            printDetails += `<li>${option}</li>`;
+                        });
+                        printDetails += '</ul>';
+                    } else {
+                        printDetails += 'No specific print options selected.';
+                    }
+                    printDetails += `<br>Free shipping — $18.99`;
+                    printOptionsEl.innerHTML = printDetails;
+                    printOptionsContainer.style.display = 'block';
+                } else {
+                    printOptionsContainer.style.display = 'none';
+                }
+            }
+
+            // Update brand name
+            const brandNameEl = document.getElementById('brief-brand-name');
+            if (brandNameEl) {
+                brandNameEl.textContent = safeGet(briefData, 'briefDetails.brandName');
+            }
+
+            // Update slogan
+            const sloganEl = document.getElementById('brief-slogan');
+            if (sloganEl) {
+                sloganEl.textContent = safeGet(briefData, 'briefDetails.slogan');
+            }
+
+            // Update description
+            const descriptionEl = document.getElementById('brief-description');
+            if (descriptionEl) {
+                descriptionEl.textContent = safeGet(briefData, 'briefDetails.description');
+            }
+
+            // Update industry
+            const industryEl = document.getElementById('brief-industry');
+            if (industryEl) {
+                industryEl.textContent = safeGet(briefData, 'briefDetails.industry');
+            }
+
+            // Update notes
+            const notesEl = document.getElementById('brief-notes');
+            if (notesEl) {
+                notesEl.textContent = safeGet(briefData, 'briefDetails.notes', 'No specific notes provided');
+            }
+
+            // Update colors
+            updateColorDisplay(briefData);
+
+            // Update style attributes
+            updateStyleAttributes(briefData);
+
+            // Update design inspiration
+            updateDesignInspiration(briefData);
+
+            // Update deliverables
+            updateDeliverables(briefData);
+
+            // Update files deliverables
+            updateFilesDeliverables(briefData);
+
+            // Update final files
+            updateFinalFiles(briefData);
+
+            // Update language
+            const languageSelect = document.getElementById('brief-language');
+            if (languageSelect) {
+                languageSelect.value = safeGet(briefData, 'briefDetails.language', 'English');
+            }
+        }
+
+        function updateColorDisplay(briefData) {
+            const colorsEl = document.getElementById('brief-colors');
+            if (!colorsEl || !briefData.selectedColors || briefData.selectedColors.length === 0) {
+                if (colorsEl) colorsEl.innerHTML = '<p>No colors selected</p>';
+                return;
+            }
+
+            colorsEl.innerHTML = '';
+
+            briefData.selectedColors.forEach(colorObj => {
+                const colorBox = document.createElement('div');
+                colorBox.className = 'brief-color-box';
+
+                if (colorObj.color === 'custom') {
+                    colorBox.style.backgroundColor = colorObj.name;
+                } else if (colorObj.src) {
+                    colorBox.style.backgroundImage = `url(${colorObj.src})`;
+                    colorBox.style.backgroundSize = 'cover';
+                    colorBox.style.backgroundPosition = 'center';
+                } else {
+                    const colorMap = {
+                        'red': '#ff4444',
+                        'blue': '#4444ff',
+                        'green': '#44ff44',
+                        'yellow': '#ffff44',
+                        'purple': '#ff44ff',
+                        'orange': '#ff8844',
+                        'aqua': '#44ffff',
+                        'pink': '#ff88cc',
+                        'dark': '#333333',
+                        'light': '#f0f0f0'
+                    };
+                    colorBox.style.backgroundColor = colorMap[colorObj.color] || '#cccccc';
+                }
+
+                colorsEl.appendChild(colorBox);
+            });
+        }
+
+        function updateStyleAttributes(briefData) {
+            const styleAttributesEl = document.getElementById('brief-style-attributes');
+            if (!styleAttributesEl || !briefData.brandStyles) {
+                if (styleAttributesEl) styleAttributesEl.innerHTML = '<p>No style attributes specified</p>';
+                return;
+            }
+
+            const styleLabels = {
+                classicToModern: ['Classic', 'Modern'],
+                matureToYouthful: ['Mature', 'Youthful'],
+                feminineToMasculine: ['Feminine', 'Masculine'],
+                playfulToSophisticated: ['Playful', 'Sophisticated'],
+                economicalToLuxurious: ['Economical', 'Luxurious'],
+                geometricToOrganic: ['Geometric', 'Organic'],
+                abstractToLiteral: ['Abstract', 'Literal']
+            };
+
+            styleAttributesEl.innerHTML = Object.entries(briefData.brandStyles).map(([key, value]) => {
+                const [left, right] = styleLabels[key] || [key, key];
+                const percentage = value || 50;
+
+                return `
+                    <div class="brief-style-slider">
+                        <span class="brief-style-left-label">${left}</span>
+                        <div class="brief-style-slider-track">
+                            <div class="brief-style-slider-thumb" style="left: ${percentage}%"></div>
+                        </div>
+                        <span class="brief-style-right-label">${right}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateDesignInspiration(briefData) {
+            const inspirationEl = document.getElementById('brief-design-inspiration');
+            if (!inspirationEl || !briefData.selectedLogos || briefData.selectedLogos.length === 0) {
+                if (inspirationEl) inspirationEl.innerHTML = '<p>No design inspiration selected</p>';
+                return;
+            }
+
+            inspirationEl.innerHTML = briefData.selectedLogos.map((src, index) => 
+                `<div class="brief-inspiration-item">
+                    <div class="brief-inspiration-image">
+                        <img src="${src}" alt="Logo ${index + 1}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+                    </div>
+                </div>`
+            ).join('');
+        }
+
+        function updateDeliverables(briefData) {
+            const deliverablesEl = document.getElementById('brief-deliverables');
+            if (!deliverablesEl) return;
+
+            const serviceType = briefData.briefDetails?.serviceType || briefData.selectedPackage;
+            let deliverables = [];
+
+            switch(serviceType) {
+                case 'bronze':
+                case 'Logo only':
+                case 'Logo Only':
+                    deliverables = [
+                        'Logo in AI and SVG format',
+                        'Typography',
+                        'Color palette'
+                    ];
+                    break;
+                case 'silver':
+                case 'gold':
+                case 'Logo & Brand Identity Pack (most popular)':
+                case 'Logo & Brand Identity Pack':
+                    deliverables = [
+                        'Logo in AI and SVG format',
+                        'Typography',
+                        'Color palette',
+                        'Brand guidelines'
+                    ];
+                    break;
+                case 'website':
+                case 'Website':
+                    deliverables = [
+                        'Complete website design',
+                        'Responsive layout',
+                        'Source code',
+                        'SEO optimization'
+                    ];
+                    break;
+                default:
+                    deliverables = [
+                        'Logo in AI and SVG format',
+                        'Typography',
+                        'Color palette'
+                    ];
+            }
+
+            deliverablesEl.innerHTML = deliverables.map(item => 
+                `<div class="deliverable-item">${item}</div>`
+            ).join('');
+        }
+
+        function updateFilesDeliverables(briefData) {
+            const filesDeliverablesEl = document.getElementById('brief-files-deliverables');
+            if (!filesDeliverablesEl) return;
+
+            const serviceType = briefData.briefDetails?.serviceType || briefData.selectedPackage;
+            let deliverables = [];
+
+            switch(serviceType) {
+                case 'bronze':
+                case 'Logo only':
+                case 'Logo Only':
+                    deliverables = [
+                        { icon: '📋', name: '1x Logo' }
+                    ];
+                    break;
+                case 'silver':
+                case 'gold':
+                case 'Logo & Brand Identity Pack (most popular)':
+                case 'Logo & Brand Identity Pack':
+                    deliverables = [
+                        { icon: '📋', name: '1x Logo' },
+                        { icon: '💼', name: '1x Business card' },
+                        { icon: '📄', name: '1x Letterhead' },
+                        { icon: '📘', name: '1x Envelope' },
+                        { icon: '📱', name: '1x Facebook cover' }
+                    ];
+                    break;
+                case 'website':
+                case 'Website':
+                    deliverables = [
+                        { icon: '🎨', name: '1x Web design (pages as needed)' },
+                        { icon: '📦', name: '1x Website package' }
+                    ];
+                    break;
+                default:
+                    deliverables = [
+                        { icon: '📋', name: '1x Logo' }
+                    ];
+            }
+
+            const html = deliverables.map(item => 
+                `<div class="brief-deliverable-row">
+                    <div class="brief-deliverable-icon">${item.icon}</div>
+                    <div class="brief-deliverable-info">
+                        <div class="brief-deliverable-name">${item.name}</div>
+                        <div class="brief-deliverable-status">📋 Design guidelines</div>
+                    </div>
+                </div>`
+            ).join('');
+
+            filesDeliverablesEl.innerHTML = html;
+        }
+
+        function updateFinalFiles(briefData) {
+            const finalFilesEl = document.getElementById('brief-final-files');
+            if (!finalFilesEl) return;
+
+            const serviceType = briefData.briefDetails?.serviceType || briefData.selectedPackage;
+            let layeredSources = [];
+            let screenQuality = ['PNG', 'JPG', 'GIF', 'PDF'];
+
+            if (serviceType === 'website' || serviceType === 'Website') {
+                layeredSources = ['AI', 'PSD', 'FIGMA', 'Source code ZIP'];
+            } else {
+                layeredSources = ['AI', 'PSD'];
+            }
+
+            finalFilesEl.innerHTML = `
+                <div class="brief-field">
+                    <label class="brief-label">LAYERED SOURCES</label>
+                    <div class="brief-file-options">
+                        ${layeredSources.map(source => `<span class="brief-file-option">${source}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div class="brief-field">
+                    <label class="brief-label">SCREEN QUALITY</label>
+                    <div class="brief-file-options">
+                        ${screenQuality.map(quality => `<span class="brief-file-option">${quality}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        /**
+         * Calculates costs and displays the invoice in the Payment tab.
+         */
+        function displayPaymentInfo(briefData) {
+            if (!briefData || !briefData.selectedPackage) {
+                return;
+            }
+
+            const packagePrices = {
+                bronze: 299,
+                silver: 599,
+                gold: 1299,
+                platinum: 2199,
+                website: 2899
+            };
+
+            const basePrice = packagePrices[briefData.selectedPackage] || 0;
+            let total = basePrice;
+            let invoiceItemsHTML = '';
+
+            // Add base package
+            const packageNames = {
+                bronze: 'Bronze Package',
+                silver: 'Silver Package', 
+                gold: 'Gold Package - Complete Brand Suite',
+                platinum: 'Platinum Package',
+                website: 'Website Package'
+            };
+            
+            const packageName = packageNames[briefData.selectedPackage] || briefData.selectedPackage;
+            invoiceItemsHTML += `<div class="invoice-item"><div>${packageName}</div><div class="invoice-column-amount">$${basePrice.toFixed(2)}</div></div>`;
+
+            // Add project options
+            if (briefData.projectOptions) {
+                if (briefData.projectOptions.guaranteed) {
+                    invoiceItemsHTML += `<div class="invoice-item"><div>Guaranteed Project</div><div class="invoice-column-amount">$0.00</div></div>`;
+                }
+                if (briefData.projectOptions.nda) {
+                    invoiceItemsHTML += `<div class="invoice-item"><div>NDA Agreement</div><div class="invoice-column-amount">$0.00</div></div>`;
+                }
+            }
+
+            // Add business card printing if applicable
+            if (briefData.businessCardPrinting && briefData.businessCardPrinting.enabled) {
+                const qty = briefData.businessCardPrinting.quantity || 0;
+                const printCost = qty * 0.50; // $0.50 per card
+                
+                if (printCost > 0) {
+                    invoiceItemsHTML += `<div class="invoice-item"><div>Business Card Printing (${qty} units)</div><div class="invoice-column-amount">$${printCost.toFixed(2)}</div></div>`;
+                    total += printCost;
+                }
+                
+                // Add free shipping as a separate line item with $0 cost
+                invoiceItemsHTML += `<div class="invoice-item"><div>Free Shipping</div><div class="invoice-column-amount">$0.00</div></div>`;
+            }
+
+            // Update the UI
+            document.getElementById('invoice-items').innerHTML = invoiceItemsHTML;
+            document.getElementById('invoice-total').textContent = `$${total.toFixed(2)}`;
+            document.getElementById('payment-total').textContent = `$${total.toFixed(2)}`;
+            document.getElementById('payment-secured').textContent = `$${total.toFixed(2)}`; // Assuming it's fully secured
+            document.getElementById('payment-released').textContent = '$0.00'; // Nothing released yet
+            document.getElementById('payment-earnings').textContent = '$0.00'; // No earnings yet
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.querySelector(`.nav-tab[onclick="switchTab('${tabName}')"]`).classList.add('active');
+            
+            if (tabName === 'payment') {
+                document.getElementById('payment-tab-content').classList.add('active');
+            } else {
+                document.getElementById(`${tabName}-tab`).classList.add('active');
+            }
+        }
+
+        /**
+         * Toggles the visibility of the user dropdown menu.
+         */
+        function toggleUserDropdown() {
+            document.getElementById("userDropdown").classList.toggle("show");
+        }
+
+        /**
+         * Signs the user out and redirects to the login page.
+         */
+        async function signOut() {
+            if (confirm("Are you sure you want to sign out?")) {
+                await firebase.auth().signOut();
+                window.location.href = 'login.html';
+            }
+        }
+
+        // --- Authentication state listener ---
+        firebase.auth().onAuthStateChanged(user => {
+            console.log('Auth state changed:', user ? user.uid : 'No user');
+            if (user && user.emailVerified) {
+                // Call our new master function to handle everything
+                initializeDashboard(user);
+            } else {
+                // For testing purposes, show a demo version
+                console.log('No authenticated user, showing demo');
+                showDemoVersion();
+            }
+        });
+        
+        function showDemoVersion() {
+            // ... (other demo data)
+        
+            // Update header for demo
+            document.getElementById("headerUserName").textContent = "Demo User";
+            const demoProfilePhotoEl = document.getElementById("headerProfilePhoto");
+            demoProfilePhotoEl.innerHTML = `<img src="https://via.placeholder.com/36/53AB81/FFFFFF?text=DU" alt="Profile Photo" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+     
+            // ... (rest of the demo function )
+        }
+    </script>
+</body>
+</html>
+
+
