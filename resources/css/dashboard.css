@@ -1,0 +1,628 @@
+/* --- Enhanced Dashboard CSS combining both designs --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        @font-face {
+          font-family: 'Graphik';
+          src: url('/fonts/Graphik Italic.woff') format('woff');
+          font-weight: 400;
+          font-style: normal;
+        }
+    
+        @font-face {
+          font-family: 'Graphik';
+          src: url('/fonts/Graphik Regular.woff') format('woff');
+          font-weight: 500;
+          font-style: normal;
+        }
+    
+        @font-face {
+          font-family: 'Graphik';
+          src: url('/fonts/Graphik Medium Regular.woff') format('woff');
+          font-weight: 700;
+          font-style: normal;
+        }
+        
+        body {
+          font-family: 'Graphik', sans-serif;
+        }
+    
+        /* --- Header Styles --- */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 0 30px;
+        }
+    
+        .header-content-grid {
+            max-width: 1152px;
+            margin: 0 auto;
+        }
+    
+        .header-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+    
+        .header-bottom-row {
+            padding-top: 2px;
+        }
+    
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+        }
+    
+        .user-name {
+            font-weight: 700;
+            color: #333;
+            cursor: pointer;
+        }
+    
+        .profile-photo {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #53AB81;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    
+        .user-dropdown {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            min-width: 180px;
+            z-index: 1001;
+            display: none;
+            overflow: hidden;
+        }
+    
+        .user-dropdown.show {
+            display: block;
+        }
+    
+        .dropdown-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+    
+        .dropdown-item:hover {
+            background-color: #f4f6f8;
+        }
+    
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+    
+        .project-title-container {
+            margin-bottom: 5px;
+        }
+    
+        .project-title-container h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            padding: 10px 0;
+        }
+    
+        .nav-tabs {
+            display: flex;
+            gap: 30px;
+            border-bottom: 1px solid #e9e9e9;
+            padding-top: 5px;
+        }
+    
+        .nav-tab {
+            padding: 12px 0;
+            padding-bottom: 15px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 700;
+            color: #666;
+            transition: all 0.2s ease;
+        }
+    
+        .nav-tab:hover {
+            color: #53AB81;
+        }
+    
+        .nav-tab.active {
+            color: #333;
+            border-bottom-color: #53AB81;
+        }
+    
+        /* --- Main Content Styles --- */
+        .main-container {
+            max-width: 1210px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+    
+        .tab-content {
+            display: none;
+            padding-top: 15px;
+        }
+    
+        .tab-content.active {
+            display: block;
+        }
+    
+        .info-bar {
+            background-color: #333;
+            color: white;
+            padding: 12px 20px;
+            margin-top: -32px;
+            margin-bottom: 30px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+        }
+    
+        .info-bar a {
+            color: #53AB81;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        /* Brief Layout Styles */
+        .brief-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px 20px;
+            border-radius: 8px;
+            border: 1px solid #e9e9e9;
+        }
+        
+        .brief-left-column {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .brief-right-column {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .brief-column {
+            background: white;
+            border: 1px solid #e9e9e9;
+            border-radius: 8px;
+            padding: 30px;
+        }
+        
+        .brief-section {
+            margin-bottom: 30px;
+        }
+
+        .brief-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .brief-section h4,
+        .brief-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #53AB81;
+        }
+        
+        .brief-field {
+            margin-bottom: 20px;
+        }
+        
+        .brief-label { 
+            display: block;
+            font-size: 14px;
+            font-weight: 600; 
+            color: #666; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+            margin-bottom: 5px; 
+        }
+        
+        .brief-value { 
+            font-size: 14px;
+            color: #333; 
+            margin-bottom: 15px; 
+            line-height: 1.6; 
+            min-height: 20px;
+            word-wrap: break-word;
+        }
+        
+        .brief-select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
+        }
+        
+        .package-display {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .package-name-box {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .package-price-box {
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        
+        .brief-color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .brief-color-box {
+            width: 180px;
+            height: 180px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            background: #f0f0f0;
+            flex-shrink: 0;
+        }
+        
+        .brief-color-swatch {
+          width: 60px;
+          height: 60px;
+          border-radius: 4px;
+          border: 2px solid #ddd;
+          display: flex;
+          flex-direction: column;
+        }
+    
+        .brief-color-row {
+          flex: 1;
+        }
+        
+        .brief-style-sliders {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .brief-style-slider {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            font-size: 14px;
+            width: 100%;
+            color: #666;
+        }
+        
+        .brief-style-left-label {
+            flex-shrink: 0;
+            margin-right: 15px;
+            font-weight: 550;
+            width: 100px;
+            text-align: left;
+            color: #666;
+        }
+        
+        .brief-style-right-label {
+            flex-shrink: 0;
+            margin-left: 15px;
+            font-weight: 550;
+            width: 100px;
+            text-align: left;
+        }
+        
+        .brief-style-slider-track {
+            flex: 1;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            position: relative;
+            width: 250px;
+            max-width: 400px;
+            min-width: auto;
+        }
+        
+        .brief-style-slider-thumb {
+            position: absolute;
+            top: -8px;
+            width: 22px;
+            height: 22px;
+            background: #53AB81;
+            border-radius: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .inspiration-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .inspiration-image {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #e9e9e9;
+        }
+        
+        .inspiration-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brief-inspiration-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .brief-inspiration-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+            aspect-ratio: 1;
+        }
+        
+        .brief-inspiration-image {
+            width: 100%;
+            height: 100%;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+            overflow: hidden;
+        }
+
+        .brief-deliverable-row {
+          display: flex;
+          align-items: center;
+          margin-bottom: 15px;
+          padding: 10px;
+          background: #f8f9fa;
+          border-radius: 6px;
+        }
+        
+        .brief-deliverable-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            width: 40px;
+            text-align: center;
+        }
+        
+        .brief-deliverable-info {
+            flex: 1;
+        }
+        
+        .brief-deliverable-name {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .brief-deliverable-actions {
+          font-size: 12px;
+          color: #666;
+        }
+        
+        .brief-deliverable-status,
+        .brief-deliverable-download {
+          margin-right: 15px;
+          cursor: pointer;
+        }
+        
+        .brief-deliverable-download:hover {
+          color: #53AB81;
+        }
+        
+        .brief-file-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .brief-file-option {
+            background: #f8f9fa;
+            border: 1px solid #e9e9e9;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .deliverable-item {
+            padding: 4px 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Payment Tab Styles */
+        .payment-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .payment-summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .summary-card {
+            background: white;
+            border: 1px solid #e9e9e9;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .invoice-container {
+            background: white;
+            border: 1px solid #e9e9e9;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .invoice-header {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            background: #f8f9fa;
+            padding: 15px 20px;
+            font-weight: 600;
+            border-bottom: 1px solid #e9e9e9;
+        }
+
+        .invoice-body {
+            padding: 20px;
+        }
+
+        .invoice-item {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .invoice-item:last-child {
+            border-bottom: none;
+        }
+
+        .invoice-footer {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            background: #f8f9fa;
+            padding: 15px 20px;
+            font-weight: 600;
+            border-top: 1px solid #e9e9e9;
+        }
+
+        .invoice-column-amount {
+            text-align: right;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #53AB81;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #45926e;
+        }
+
+        .btn-secondary {
+            background: #e9ecef;
+            color: #333;
+            border: 1px solid #e9e9e9;
+        }
+
+        .btn-secondary:hover {
+            background: #dcdfe2;
+        }
+        
+        /* Responsive Brief Layout */
+        @media (max-width: 768px) {
+            .brief-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        
+            .brief-left-column {
+                order: 2;
+            }
+        
+            .brief-right-column {
+                order: 1;
+            }
+        }
+
+        .guaranteed-nda-tag {
+            background-color: #d4edda; /* Light green */
+            color: #155724; /* Dark green */
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 5px;
+        }
